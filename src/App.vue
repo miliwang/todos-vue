@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-11-21 18:42:42
+ * @LastEditTime: 2019-11-21 21:20:56
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /todos-vue/src/App.vue
+ -->
 <template>
   <div id="app">
     <div id="nav">
@@ -9,7 +17,7 @@
 </template>
 
 <style>
-#app {
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,5 +36,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
