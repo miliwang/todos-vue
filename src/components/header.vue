@@ -1,7 +1,7 @@
 <!--
  * @Author: mili
  * @Date: 2019-11-21 17:35:42
- * @LastEditTime: 2019-11-21 20:58:51
+ * @LastEditTime: 2019-11-22 13:54:27
  * @LastEditors: Please set LastEditors
  * @Description: 头部
  * @FilePath: /Autohome/todomvc-vue1/src/components/header.vue
@@ -21,23 +21,27 @@ export default {
   name: "Header",
   props: {
     todoList: Array,
-    todo: String,
-    count: Number
+    index: Number
   },
   data: function () {
     return {
-      todoTxt: ""
+      todoTxt: "",
+      count: 0
     };
+  },
+  compute () {
+
+  },
+  watch: {
+    index: function (val, oldVal) {
+      this.count = val;
+    }
   },
   methods: {
     // 添加 TodoItem
     addTodo: function () {
-      // console.log(this.todo);
-      // this.todoList.push({ 'id': this.count++, 'txt': this.todoTxt, 'isCompleted': false, 'isEdited': false });
-      // // localStorage['todos'] = JSON.stringify(this.todoList);
-      // this.todoTxt = '';
-      // this.left++;
-      this.$emit("addTodo", this.todoTxt);
+      this.$emit("addTodo", this.todoTxt, ++this.count);
+      this.todoTxt = "";
     }
   },
   directives: {

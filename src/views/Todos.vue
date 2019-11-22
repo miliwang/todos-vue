@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-11-21 17:35:42
- * @LastEditTime: 2019-11-21 21:25:10
+ * @LastEditTime: 2019-11-22 14:17:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Autohome/todomvc-vue1/src/views/Home.vue
@@ -9,7 +9,7 @@
 <template>
   <div class="home">
     <!-- This section should be hidden by default and shown when there are todos -->
-    <Header @addTodo="addTodo" />
+    <Header @addTodo="addTodo" :index="count" />
     <section class="main">
       <input id="toggle-all" class="toggle-all" type="checkbox" :checked="count === 0 ? false : left === 0 "
         @change="onChangeAllCheck">
@@ -18,7 +18,7 @@
         <!-- These are here just to show the structure of the list items -->
         <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
         <li class="todo" :class="{completed:item.isCompleted,editing:item.isEdited}" v-for="item in todoList"
-          :key="item.id">
+          :key="item.txt">
           <div class="view">
             <input class="toggle" type="checkbox" checked="item.isCompleted" v-model="item.isCompleted"
               @change="onChangeChecked">
@@ -41,7 +41,7 @@ import Footer from "@/components/footer.vue";
 var data = localStorage["todos"] || "[]";
 var todo = JSON.parse(data);
 export default {
-  name: "home",
+  name: "todo",
   components: {
     Header,
     Footer
@@ -56,16 +56,34 @@ export default {
       isSelected: "all",
       count: todo.length || 0,
       left: todo.length,
-      todo
+      todo: JSON.parse(data)
     };
+  },
+  beforeCreate () {
+    this.$store.commit("increment", todo);
+  },
+  watch: {
+    todoList: function (val, oldVal) {
+      return this.$store.state.todo;
+    }
+  },
+  created () {
+    console.log(this.$router);
+    console.log(this.$store.state.todo);
+  },
+  mounted () {
+    console.log(this.store);
+    console.log(this.router);
   },
   methods: {
     // 添加 TodoItem
-    addTodo: function (txt) {
-      this.todoList.push({ "id": this.count++, "txt": txt, "isCompleted": false, "isEdited": false });
-      // localStorage['todos'] = JSON.stringify(this.todoList);
+    addTodo: function (txt, count) {
+      this.todoList.push({ "id": count, "txt": txt, "isCompleted": false, "isEdited": false });
+      let data = Object.assign(this.$store.state.todo, this.todoList);
+      this.$store.commit("increment", data);
       this.todoTxt = "";
-      this.left++;
+      this.count = count;
+      ++this.left;
     },
     onChangeAllCheck: function (e) {
       if (this.isSelected === "active") {
@@ -77,19 +95,18 @@ export default {
       }
       todo = JSON.parse(localStorage["todos"] || "[]");
       this.todoList = todo.map((item) => {
-        console.log(this.left + "---------2");
         item.isCompleted = !(this.left === 0);
         return item;
       });
       this.left = this.left === 0 ? this.todoList.length : 0;
-      localStorage["todos"] = JSON.stringify(this.todoList || "[]");
+      this.$store.commit("increment", this.todoList);
     },
     // 点击复选框
     onChangeChecked: function () {
-      console.log("jjdfkajdfkajd");
       this.left = this.todoList.filter((item) => {
         return !item.isCompleted ? item : "";
       }).length;
+      this.$store.commit("increment", this.todoList);
     },
     // 显示编辑框
     onEditClicked: function (todo) {
@@ -98,6 +115,7 @@ export default {
         item === todo ? this.editTxt = todo.txt : "";
         return item;
       });
+      this.$store.commit("increment", this.todoList);
     },
     // 编辑当前 TodoItem
     editTodo: function (todo) {
@@ -106,6 +124,7 @@ export default {
         item.isEdited = false;
         return item;
       });
+      this.$store.commit("increment", this.todoList);
     },
     // 删除当前 TodoItem
     delTodo: function (currt) {
@@ -118,6 +137,7 @@ export default {
         return item;
       });
       this.count = this.todoList.length;
+      this.$store.commit("increment", this.todoList);
     },
     // 清除 Todo列表中标志已经完成项目
     clearTodos: function () {
@@ -125,10 +145,11 @@ export default {
         return !item.isCompleted;
       });
       this.count = this.left = this.todoList.length;
+      this.$store.commit("increment", this.todoList);
     },
     onSelected: function (select) {
-      this.isSelected = select;
       todo = JSON.parse(localStorage["todos"] || "[]");
+      console.log(todo);
       this.todoList = todo.filter((item) => {
         if (select === "active") {
           return !item.isCompleted ? item : "";
@@ -138,6 +159,8 @@ export default {
         }
         return item;
       });
+      console.log(this.todoList);
+      // this.count = this.todoList.length;
     }
   },
   directives: {
@@ -150,7 +173,8 @@ export default {
   },
   // 数据更新时调用
   beforeUpdate: function () {
-    localStorage["todos"] = this.count === 0 ? "[]" : JSON.stringify(this.todoList);
+    // localStorage["todos"] = this.count === 0 ? "[]" : JSON.stringify(this.todoList);
+    console.log("list updated");
   }
 };
 </script>

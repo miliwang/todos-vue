@@ -1,27 +1,26 @@
 <!--
  * @Author: your name
  * @Date: 2019-11-21 18:42:42
- * @LastEditTime: 2019-11-21 21:20:56
- * @LastEditors: your name
+ * @LastEditTime: 2019-11-22 13:46:03
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /todos-vue/src/App.vue
  -->
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">todos</router-link> |
+      <router-link to="/lifeCycle">生命周期</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
 <style>
-/* #app {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
@@ -36,5 +35,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-} */
+}
 </style>

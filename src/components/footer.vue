@@ -1,7 +1,7 @@
 <!--
  * @Author: mili
  * @Date: 2019-11-21 17:41:31
- * @LastEditTime: 2019-11-21 21:24:45
+ * @LastEditTime: 2019-11-22 14:15:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Autohome/todomvc-vue1/src/components/footer.vue
@@ -39,19 +39,22 @@ export default {
   },
   data () {
     return {
-      isSelected: "all"
+      isSelected: "all",
+      number: 0
     };
+  },
+  watch: {
+    number: function (val, oldVal) {
+      return this.count;
+    }
   },
   methods: {
     // 清除 Todo列表中标志已经完成项目
     clearTodos: function () {
-      // this.todoList = this.todoList.filter((item) => {
-      //   return !item.isCompleted;
-      // });
-      // this.count = this.left = this.todoList.length;
       this.$emit("clearTodos");
     },
     onSelected: function (type) {
+      this.isSelected = type;
       this.$emit("onSelected", type);
     }
 
