@@ -67,21 +67,12 @@ export default {
       return this.$store.state.todo;
     }
   },
-  created () {
-    console.log(this.$router);
-    console.log(this.$store.state.todo);
-  },
-  mounted () {
-    console.log(this.store);
-    console.log(this.router);
-  },
   methods: {
     // 添加 TodoItem
     addTodo: function (txt, count) {
       this.todoList.push({ "id": count, "txt": txt, "isCompleted": false, "isEdited": false });
       let data = Object.assign(this.$store.state.todo, this.todoList);
       this.$store.commit("increment", data);
-      this.todoTxt = "";
       this.count = count;
       ++this.left;
     },
@@ -149,7 +140,6 @@ export default {
     },
     onSelected: function (select) {
       todo = JSON.parse(localStorage["todos"] || "[]");
-      console.log(todo);
       this.todoList = todo.filter((item) => {
         if (select === "active") {
           return !item.isCompleted ? item : "";
@@ -159,7 +149,6 @@ export default {
         }
         return item;
       });
-      console.log(this.todoList);
       // this.count = this.todoList.length;
     }
   },
@@ -174,7 +163,6 @@ export default {
   // 数据更新时调用
   beforeUpdate: function () {
     // localStorage["todos"] = this.count === 0 ? "[]" : JSON.stringify(this.todoList);
-    console.log("list updated");
   }
 };
 </script>

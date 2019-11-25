@@ -20,12 +20,10 @@ export default {
   components: {
   },
   beforeCreate () {
-    console.log(this);
   },
   // 数据更新时调用
   beforeUpdate: function () {
     // localStorage["todos"] = this.count === 0 ? "[]" : JSON.stringify(this.todoList);
-    console.log("list updated");
   }
 };
 </script>

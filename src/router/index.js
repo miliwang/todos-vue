@@ -10,7 +10,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Todos from "../views/Todos.vue";
 
-console.log("route");
 Vue.use(VueRouter);
 
 const routes = [

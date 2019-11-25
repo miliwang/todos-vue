@@ -20,7 +20,6 @@
 export default {
   name: "Header",
   props: {
-    todoList: Array,
     index: Number
   },
   data: function () {
