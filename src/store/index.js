@@ -5,7 +5,8 @@ Vue.use(Vuex);
 console.log("vuex");
 export default new Vuex.Store({
   state: {
-    todo: []
+    todo: [],
+    count: 0
   },
   mutations: {
     increment (state, data) {
